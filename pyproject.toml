@@ -1,0 +1,110 @@
+[project]
+name = "battleship"
+version = "0.1.0"
+description = "Write later."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pytz>=2024.2",
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.8.4"]
+test = ["pytest-cov>=6.0.0", "pytest>=8.3.4"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+
+[tool.ruff]
+# Exclude common directories that don't need linting
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+line-length = 88 # Adjust as needed, but 88 is a good starting point
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle (Error)
+    "F",   # Pyflakes
+    "W",   # pycodestyle (Warning)
+    "C90", # mccabe (Complexity)
+    "I",   # isort (Import sorting)
+    "UP",  # pyupgrade (Upgrade syntax for newer Python versions)
+    "D",   # pydocstyle (Docstring conventions) - THIS IS KEY FOR DOCSTRINGS
+    "S",   # bandit (Security)
+    "BLE", # flake8-blind-except
+    "B",   # flake8-bugbear
+    "A",   # flake8-builtins
+    "C4",  # flake8-comprehensions
+    "DTZ", # flake8-datetimez
+    "T20", # flake8-print
+    "RET", # flake8-return
+    "SIM", # flake8-simplify
+    "ARG", # flake8-unused-arguments
+    "RUF", # Ruff-specific rules
+]
+
+# Ignore specific rules if absolutely needed (use with caution!)
+# Start with an empty ignore list and add only when necessary
+ignore = [
+    "E501", # Line too long (93 > 88)RuffE501
+    "D100", # Missing docstring in public moduleRuffD100
+    "D101", # Missing docstring in public classRuffD101
+    "D102", # Missing docstring in public methodRuffD102
+    "D103", # Missing docstring in public functionRuffD103
+    "D104", # Missing docstring in public packageRuffD104
+    "D105", # Missing docstring in magic methodRuffD105
+    "D107", # Missing docstring in `__init__`RuffD107
+    "S311", # Standard pseudo-random generators are not suitable for cryptographic purposesRuffS311
+]
+
+# Docstring enforcement settings (pydocstyle)
+# http://www.pydocstyle.org/en/stable/error_codes.html
+[tool.ruff.lint.pydocstyle]
+convention = "google" # Or "numpy" or "pep257"
+
+# Per-file-ignores
+# Use this to selectively disable rules for specific files or directories
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    # "D",
+    "S",
+    # "ARG",
+] # Example: Be less strict with docstrings and security in tests
+"setup.py" = ["T201"] # Ignore print statements in setup.py
+
+# Code formatting options (these are generally good defaults)
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
