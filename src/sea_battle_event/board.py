@@ -11,6 +11,8 @@ from sea_battle_event.event_manager import EnentManager
 class Board:
     def __init__(self, event_manager: EnentManager, config: GameConfig):
         self.event_manager = event_manager
+        self.subscriptions()
+
         self.rng = random.Random()
         self.rng.seed(config.seed)
 
@@ -30,7 +32,6 @@ class Board:
         )
 
         self.fill_with_ships(config.ships)
-        self.subscriptions()
 
     def subscriptions(self) -> None:
         self.event_manager.subscribe(EventName.PLAYER_GUESS, self.check_hit)
@@ -129,10 +130,6 @@ class Board:
             if self.ships_grid[pos_shifted.as_tuple] is not None:
                 return True
         return False
-
-    # @property
-    # def num_ships_alive(self) -> int:
-    #     return sum(1 for ship in self.ships if ship.alive)
 
     def check_hit(self, pos: Pos) -> None:
         ship = self.ships_grid[pos.as_tuple]
