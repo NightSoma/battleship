@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from typing import ClassVar
 
-from utils.timer import timer
-
 
 @dataclass(frozen=True, slots=True)
 class Pos:
@@ -22,14 +20,12 @@ class Pos:
     diagonals_pos: ClassVar["list[Pos]"]
     all_pos_around: ClassVar["list[Pos]"]
 
-    @timer(print_enabled=False)
     def __add__(self, other: object) -> "Pos":
         if not isinstance(other, Pos):
             return NotImplemented
 
         return Pos(self.row + other.row, self.col + other.col)
 
-    @timer(print_enabled=False)
     def __mul__(self, other: object) -> "Pos":
         if not (isinstance(other, int)):
             return NotImplemented
@@ -37,12 +33,10 @@ class Pos:
         return Pos(self.row * other, self.col * other)
 
     @property
-    @timer(print_enabled=False)
     def as_tuple(self) -> tuple[int, int]:
         return self.row, self.col
 
     @property
-    @timer(print_enabled=False)
     def copy(self) -> "Pos":
         return Pos(self.row, self.col)
 

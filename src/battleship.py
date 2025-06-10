@@ -1,13 +1,8 @@
 import time
 
-from utils.timer import TimerManager
-
-TimerManager.decorator_timers_enabled = False
-
 from sea_battle.board import Board
 from sea_battle.enums import HitResult
 from sea_battle.player import SimplePlayer
-from utils.fprint import fprint
 
 
 def main():
@@ -19,7 +14,7 @@ def main():
     turns = 0
     guesses = 0
     hits = 0
-    # СВЯТИЙ РАНДОМ
+
     while board.num_ships_alive > 0:
         turns += 1
         guess_result: HitResult = HitResult.game_started
@@ -40,13 +35,12 @@ def main():
             if board.num_ships_alive <= 0:
                 break
     end = time.perf_counter()
-    # print(board)
-    fprint("time", end - start)
-    fprint("acc", hits / guesses)
-    fprint(hits=hits)
-    fprint(guesses=guesses)
-    fprint(turns=turns)
-    TimerManager.print_all_decorator_timers(sort="avg_percent")
+    print(board)
+    print("time", end - start)
+    print("acc", hits / guesses)
+    print("hits", hits)
+    print("guesses", guesses)
+    print("turns", turns)
 
     pass
 

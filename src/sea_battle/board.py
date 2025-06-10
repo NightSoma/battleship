@@ -4,11 +4,9 @@ from common.grid import Grid
 from common.pos import Pos
 from common.ship import Ship
 from sea_battle.enums import HitResult
-from utils.timer import timer
 
 
 class Board:
-    @timer(print_enabled=False)
     def __init__(
         self,
         rows: int,
@@ -34,7 +32,6 @@ class Board:
             )
         )
 
-    @timer(print_enabled=False)
     @staticmethod
     def generate_all_valid_ship_placements(
         rows: int,
@@ -66,7 +63,6 @@ class Board:
 
         return free_cells
 
-    @timer(print_enabled=False)
     @staticmethod
     def offset_borders(rows: int, cols: int, length: int, direction: Pos):
         start_rows = 0
@@ -85,12 +81,10 @@ class Board:
                 start_cols += length
         return start_rows, start_cols, end_rows, end_cols
 
-    @timer(print_enabled=False)
     def fill_with_ships(self, ship_lengths: list[int]) -> None:
         for length in ship_lengths:
             self.place_random_ship(length)
 
-    @timer(print_enabled=False)
     def place_random_ship(self, ship_length: int) -> None:
         while self.free_cells[ship_length]:
             pos, direction = self.free_cells[ship_length].pop()
@@ -98,7 +92,6 @@ class Board:
             if self.place_ship(pos, direction, ship_length):
                 return
 
-    @timer(print_enabled=False)
     def place_ship(
         self,
         pos: Pos,
@@ -122,7 +115,6 @@ class Board:
         self.ships.append(ship)
         return True
 
-    @timer(print_enabled=False)
     def is_ships_around(self, pos: Pos) -> bool:
         for dir_pos in Pos.all_pos_around:
             pos_shifted = pos + dir_pos
@@ -134,11 +126,9 @@ class Board:
         return False
 
     # @property
-    # @timer(print_enabled=False)
     # def num_ships_alive(self) -> int:
     #     return sum(1 for ship in self.ships if ship.alive)
 
-    @timer(print_enabled=False)
     def check_hit(self, pos: Pos) -> HitResult:
         ship = self.ships_grid[pos.as_tuple]
         self.hit_grid[pos.as_tuple] = True
@@ -153,7 +143,6 @@ class Board:
         return HitResult.ship_destroyed
 
     @property
-    @timer(print_enabled=False)
     def debug_grid(self) -> Grid[str]:
         grid = Grid(self.rows, self.cols, " ")
         for row in range(self.rows):
@@ -168,7 +157,6 @@ class Board:
 
         return grid
 
-    @timer(print_enabled=False)
     def __str__(self) -> str:
         final_str: list[str] = []
 

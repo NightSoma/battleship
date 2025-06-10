@@ -3,11 +3,9 @@ import random
 from common.grid import Grid
 from common.pos import Pos
 from sea_battle.enums import Grid_State, HitResult
-from utils.timer import timer
 
 
 class SimplePlayer:
-    @timer(print_enabled=False)
     def __init__(
         self, board_rows: int, board_cols: int, seed: int | None = None
     ) -> None:
@@ -29,7 +27,6 @@ class SimplePlayer:
         ]
         self.rng.shuffle(self.possible_places)
 
-    @timer(print_enabled=False)
     def get_guess(self) -> Pos:
         while self.possible_places:
             self.last_guess = self.possible_places.pop()
@@ -41,7 +38,6 @@ class SimplePlayer:
 
         raise ValueError("No possible places left")
 
-    @timer(print_enabled=False)
     def give_feedback(self, guess_result: HitResult) -> None:
         if self.last_guess is None:
             return
@@ -69,7 +65,6 @@ class SimplePlayer:
 
         self.last_guess = None
 
-    @timer(print_enabled=False)
     def mark_ship_destroyed_and_area_around(self, pos: Pos) -> None:
         stack: list[Pos] = [pos]
         while stack:
@@ -99,7 +94,6 @@ class SimplePlayer:
                 ]:
                     stack.append(new_pos)
 
-    @timer(print_enabled=False)
     def check_if_another_hits_was_around(self, pos: Pos) -> bool:
         dir_offset = None
         opposite_offset = None
@@ -131,14 +125,12 @@ class SimplePlayer:
 
         return True
 
-    @timer(print_enabled=False)
     def set_diagonal_cells_as_not_possible(self, pos: Pos) -> None:
         for dir_offset in Pos.diagonals_pos:
             self.board_grid_state.set_or_none(
                 (pos + dir_offset).as_tuple, Grid_State.cannot_be_ship
             )
 
-    @timer(print_enabled=False)
     def mark_sides_around_as_possible(self, pos: Pos) -> None:
         for dir_offset in Pos.adjasent_pos:
             new_pos = pos + dir_offset
@@ -150,7 +142,6 @@ class SimplePlayer:
                 self.possible_places.append(new_pos)
 
     @property
-    @timer(print_enabled=False)
     def debug_grid(self) -> Grid[str]:
         grid = Grid(self.board_rows, self.board_cols, " ")
         for row in range(self.board_rows):

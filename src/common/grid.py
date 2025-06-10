@@ -1,8 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Generic, TypeVar
 
-from utils.timer import timer
-
 T = TypeVar("T")
 
 
@@ -13,18 +11,15 @@ class Grid(Generic[T]):
     fill_value: T
     grid: list[list[T]] = field(init=False)
 
-    @timer(print_enabled=False)
     def __post_init__(self):
         self.grid = [
             [self.fill_value for _ in range(self.width)] for _ in range(self.height)
         ]
 
-    @timer(print_enabled=False)
     def is_inside(self, row: int, col: int) -> bool:
         """Checks if the given row and column are within the grid's bounds."""
         return 0 <= row < self.height and 0 <= col < self.width
 
-    @timer(print_enabled=False)
     def unsafe_set(self, key: tuple[int, int], value: T) -> None:
         """Sets the value at the given key without bounds checking.
 
@@ -38,7 +33,6 @@ class Grid(Generic[T]):
         row, col = key
         self.grid[row][col] = value
 
-    @timer(print_enabled=False)
     def unsafe_get(self, key: tuple[int, int]) -> T:
         """Gets the value at the given key without bounds checking.
 
@@ -54,7 +48,6 @@ class Grid(Generic[T]):
         row, col = key
         return self.grid[row][col]
 
-    @timer(print_enabled=False)
     def get_or_none(self, key: tuple[int, int]) -> T | None:
         """Gets the value at the given key or None if out of bounds.
 
@@ -69,7 +62,6 @@ class Grid(Generic[T]):
             return self.grid[row][col]
         return None
 
-    @timer(print_enabled=False)
     def set_or_none(self, key: tuple[int, int], value: T) -> None:
         """Sets the value at the given key if within bounds, otherwise does nothing.
 
@@ -81,7 +73,6 @@ class Grid(Generic[T]):
         if self.is_inside(row, col):
             self.grid[row][col] = value
 
-    @timer(print_enabled=False)
     def __getitem__(self, key: tuple[int, int]) -> T:
         """Gets the value at the given key, raising IndexError if out of bounds.
 
@@ -99,7 +90,6 @@ class Grid(Generic[T]):
             return self.grid[row][col]
         raise IndexError(f"Index out of range {row}, {col}")
 
-    @timer(print_enabled=False)
     def __setitem__(self, key: tuple[int, int], value: T) -> None:
         """Sets the value at the given key, raising IndexError if out of bounds.
 
