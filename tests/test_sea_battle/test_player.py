@@ -93,7 +93,7 @@ def test_feedback__ship_hit_first_hit():
     assert player.board_grid_state[2, 0] == Grid_State.maybe_ship
 
 
-def test_feedback__ship_hit_second_hit():
+def test_feedback__ship_hit_second_hit_horizontal():
     player = SimplePlayer(3, 3, 42)
     player.last_guess = Pos(1, 0)
     player.possible_places.pop()
@@ -113,6 +113,28 @@ def test_feedback__ship_hit_second_hit():
         Pos(1, 1),
         Pos(2, 0),
         Pos(1, 2),
+    ]
+
+
+def test_feedback__ship_hit_second_hit_vertical():
+    player = SimplePlayer(3, 3, 42)
+    player.last_guess = Pos(1, 0)
+    player.possible_places.pop()
+    player.give_feedback(HitResult.ship_hit)
+    player.last_guess = Pos(2, 0)
+    player.give_feedback(HitResult.ship_hit)
+    assert player.possible_places == [
+        Pos(0, 1),
+        Pos(0, 2),
+        Pos(1, 2),
+        Pos(1, 1),
+        Pos(2, 2),
+        Pos(2, 0),
+        Pos(2, 1),
+        Pos(0, 0),
+        Pos(0, 0),
+        Pos(1, 1),
+        Pos(2, 0),
     ]
 
 

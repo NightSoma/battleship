@@ -1,4 +1,4 @@
-from sea_battle_event.ship import Ship
+from common.ship import Ship
 
 
 def test_alive():

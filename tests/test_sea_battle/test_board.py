@@ -44,10 +44,11 @@ def test_debug_grid():
     board = Board(3, 3, seed=42)
     board.fill_with_ships([1, 2])
     assert board.check_hit(Pos(0, 1)) == HitResult.ship_destroyed
+    assert board.check_hit(Pos(1, 1)) == HitResult.miss
     grid = Grid(width=3, height=3, fill_value=" ")
     grid.grid = [
         [" ", "#", " "],
-        [" ", " ", " "],
+        [" ", "x", " "],
         [" ", "2", "2"],
     ]
 

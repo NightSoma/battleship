@@ -16,12 +16,6 @@ def test__add__positive_numbers():
     assert p3 == Pos(21, 12)
 
 
-def test__mul__():
-    p1 = Pos(10, 12)
-    p3 = p1 * 2
-    assert p3 == Pos(20, 24)
-
-
 def test__add__negative_numbers():
     p1 = Pos(10, 12)
     p2 = Pos(-2, -5)
@@ -34,6 +28,19 @@ def test__add__with_non_pos():
     other = 5
     with pytest.raises(TypeError):
         pos1 + other  # type: ignore
+
+
+def test__mul__():
+    p1 = Pos(10, 12)
+    p3 = p1 * 2
+    assert p3 == Pos(20, 24)
+
+
+def test__mul__with_non_pos():
+    pos1 = Pos(1, 2)
+    other = "5"
+    with pytest.raises(TypeError):
+        pos1 * other  # type: ignore
 
 
 def test_as_tuple():
