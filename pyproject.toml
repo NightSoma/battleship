@@ -1,7 +1,7 @@
 [project]
 name = "battleship"
 version = "0.1.0"
-description = "Write later."
+description = "Python implementation of the classic Battleship game, featuring both direct and event-driven game logic."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -17,7 +17,6 @@ pythonpath = ["src"]
 
 
 [tool.ruff]
-# Exclude common directories that don't need linting
 exclude = [
     ".bzr",
     ".direnv",
@@ -46,7 +45,7 @@ exclude = [
     "site-packages",
     "venv",
 ]
-line-length = 88 # Adjust as needed, but 88 is a good starting point
+line-length = 88
 target-version = "py313"
 
 [tool.ruff.lint]
@@ -71,8 +70,7 @@ select = [
     "RUF", # Ruff-specific rules
 ]
 
-# Ignore specific rules if absolutely needed (use with caution!)
-# Start with an empty ignore list and add only when necessary
+# Ignore specific rules
 ignore = [
     "E501", # Line too long (93 > 88)RuffE501
     "D100", # Missing docstring in public moduleRuffD100
@@ -85,22 +83,19 @@ ignore = [
     "S311", # Standard pseudo-random generators are not suitable for cryptographic purposesRuffS311
 ]
 
-# Docstring enforcement settings (pydocstyle)
-# http://www.pydocstyle.org/en/stable/error_codes.html
+# Docstring enforcement settings
 [tool.ruff.lint.pydocstyle]
-convention = "google" # Or "numpy" or "pep257"
+convention = "google"
 
 # Per-file-ignores
-# Use this to selectively disable rules for specific files or directories
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = [
     # "D",
     "S",
     # "ARG",
-] # Example: Be less strict with docstrings and security in tests
+]
 "setup.py" = ["T201"] # Ignore print statements in setup.py
 
-# Code formatting options (these are generally good defaults)
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
